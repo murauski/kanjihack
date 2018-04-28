@@ -31,10 +31,7 @@ class MainViewController: UIViewController {
         addPanGestureForAnswerView()
         defaultCenter = answerView.center
         
-        rightEmojiLabel.alpha = 0
-        wrongEmojiLabel.alpha = 0
-        
-        questionView.alpha = 0
+        resetViews();
     }
     
     func addTapGestureRecognizerForQuestionView() {
@@ -59,7 +56,7 @@ class MainViewController: UIViewController {
         handleRightAnswerLogic()
         
         if sender.state == UIGestureRecognizerState.ended {
-            if answerView.center.y - defaultCenter.y > 100 {
+            if answerView.center.y - defaultCenter.y > 132 {
                 removeAnswerCardWithAnimation(animationType: removeAnimation.down)
             } else if answerView.center.y < 100 {
                 removeAnswerCardWithAnimation(animationType: removeAnimation.top)
@@ -109,14 +106,14 @@ class MainViewController: UIViewController {
             self.answerView.center = CGPoint(x: self.answerView.center.x, y: CGFloat(yCoordinate))
         }, completion: {
             finished in
-            self.resetView()
+            self.resetViewWithAnimation()
         })
     }
     
-    func resetView() {
+    func resetViews() {
         
         self.answerView.alpha = 0
-        self.questionView.alpha = 0
+        self.questionView.alpha = 1
         
         rightEmojiLabel.alpha = 0
         wrongEmojiLabel.alpha = 0
@@ -127,13 +124,19 @@ class MainViewController: UIViewController {
         self.questionView.center = defaultCenter
         self.answerView.center = defaultCenter
         
+    }
+    
+    func resetViewWithAnimation() {
+        resetViews()
+        
+        self.answerView.alpha = 0
+        self.questionView.alpha = 0
+        
         UIView.animate(withDuration: 2, animations: {
-            self.answerView.alpha = 1
             self.questionView.alpha = 1
         }, completion: {
             finished in
         })
-        
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
