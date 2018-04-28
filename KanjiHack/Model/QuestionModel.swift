@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Question: Codable {
+struct QuestionModel: Codable {
     var hint1: String
     var hint2: String
     var value: String

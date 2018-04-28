@@ -10,9 +10,13 @@ import UIKit
 
 class StartViewController: UIViewController {
 
+    @IBOutlet weak var continueButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        continueButton.layer.cornerRadius = 5
+        continueButton.layer.masksToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
