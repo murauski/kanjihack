@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +20,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func startButtonDidPressed(_ sender: UIButton) {
+        let mainViewController = storyboard?.instantiateViewController(withIdentifier: "questionViewControllerKey") as! QuestionsViewController
+        navigationController?.pushViewController(questionViewController,
+                                                 animated: true)
+    }
+    
+    
 }
 
