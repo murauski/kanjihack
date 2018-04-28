@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum removeAnimation {
+    case top
+    case down
+}
+
 class MainViewController: UIViewController {
 
     @IBOutlet weak var questionView: UIView!
@@ -45,31 +50,63 @@ class MainViewController: UIViewController {
     @objc func draggedView(_ sender: UIPanGestureRecognizer){
         self.view.bringSubview(toFront: answerView)
         let translation = sender.translation(in: self.view)
-//        answerView.center = CGPoint(x: answerView.center.x + translation.x, y: answerView.center.y + translation.y)
+
         answerView.center = CGPoint(x: answerView.center.x, y: answerView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
         
+        print("x - \(answerView.center.x) y - \(answerView.center.y)")
+        handleWrongAnswerLogic()
+        handleRightAnswerLogic()
+        
+        if sender.state == UIGestureRecognizerState.ended {
+            if answerView.center.y - defaultCenter.y > 100 {
+                removeAnswerCardWithAnimation(animationType: removeAnimation.down)
+            } else if answerView.center.y < 100 {
+                removeAnswerCardWithAnimation(animationType: removeAnimation.top)
+            } else {
+                
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                    self.answerView.center = self.defaultCenter
+                    self.wrongEmojiLabel.alpha = 0
+                    self.rightEmojiLabel.alpha = 0
+                }, completion: nil)
+            }
+        }
+    }
+    
+    func handleWrongAnswerLogic() {
         let wrongAnswerAlpha = defaultCenter.y - answerView.center.y
         switch wrongAnswerAlpha {
-        case 100 ..< 1000:
+        case 100... :
             wrongEmojiLabel.alpha = 1
         case 0 ..< 100:
             wrongEmojiLabel.alpha = wrongAnswerAlpha/100
         default:
             wrongEmojiLabel.alpha = 0
         }
-        print("x - \(answerView.center.x) y - \(answerView.center.y)")
-        
-        if answerView.center.y < 100 {
-            removeAnswerCardWithAnimation()
-        }
-        
     }
     
-    func removeAnswerCardWithAnimation() {
+    func handleRightAnswerLogic() {
+        let rightAnswerAlpha = answerView.center.y - defaultCenter.y
+        switch rightAnswerAlpha {
+        case 100... :
+            rightEmojiLabel.alpha = 1
+        case 0 ..< 100:
+            rightEmojiLabel.alpha = rightAnswerAlpha/100
+        default:
+            rightEmojiLabel.alpha = 0
+        }
+    }
+    
+    func removeAnswerCardWithAnimation(animationType: removeAnimation) {
        
+        var yCoordinate = -300
+       
+        if animationType == removeAnimation.down {
+            yCoordinate = Int(self.view.frame.size.height + 300)
+        }
         UIView.animate(withDuration: 0.3, animations: {
-            self.answerView.center = CGPoint(x: self.answerView.center.x, y: -300)
+            self.answerView.center = CGPoint(x: self.answerView.center.x, y: CGFloat(yCoordinate))
         }, completion: {
             finished in
             self.resetView()
@@ -95,8 +132,6 @@ class MainViewController: UIViewController {
             self.questionView.alpha = 1
         }, completion: {
             finished in
-            //self.myView.isHidden = false
-    //        self.showAnswerViewWithAnimation()
         })
         
     }
