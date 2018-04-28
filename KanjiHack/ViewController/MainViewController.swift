@@ -13,13 +13,23 @@ class MainViewController: UIViewController {
     @IBOutlet weak var questionView: UIView!
     @IBOutlet weak var answerView: UIView!
     
+    @IBOutlet weak var rightEmojiLabel: UILabel!
+    @IBOutlet weak var wrongEmojiLabel: UILabel!
+    
     var panGesture = UIPanGestureRecognizer()
+    var defaultCenter = CGPoint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         addTapGestureRecognizerForQuestionView()
         addPanGestureForAnswerView()
+        defaultCenter = answerView.center
+        
+        rightEmojiLabel.alpha = 0
+        wrongEmojiLabel.alpha = 0
+        
+        questionView.alpha = 0
     }
     
     func addTapGestureRecognizerForQuestionView() {
@@ -39,6 +49,15 @@ class MainViewController: UIViewController {
         answerView.center = CGPoint(x: answerView.center.x, y: answerView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
         
+        let wrongAnswerAlpha = defaultCenter.y - answerView.center.y
+        switch wrongAnswerAlpha {
+        case 100 ..< 1000:
+            wrongEmojiLabel.alpha = 1
+        case 0 ..< 100:
+            wrongEmojiLabel.alpha = wrongAnswerAlpha/100
+        default:
+            wrongEmojiLabel.alpha = 0
+        }
         print("x - \(answerView.center.x) y - \(answerView.center.y)")
         
         if answerView.center.y < 100 {
@@ -61,10 +80,17 @@ class MainViewController: UIViewController {
         
         self.answerView.alpha = 0
         self.questionView.alpha = 0
-        self.questionView.center = self.view.center
-        self.answerView.center = self.view.center
         
-        UIView.animate(withDuration: 3, animations: {
+        rightEmojiLabel.alpha = 0
+        wrongEmojiLabel.alpha = 0
+        
+        self.view.bringSubview(toFront: answerView)
+        self.view.bringSubview(toFront: questionView)
+        
+        self.questionView.center = defaultCenter
+        self.answerView.center = defaultCenter
+        
+        UIView.animate(withDuration: 2, animations: {
             self.answerView.alpha = 1
             self.questionView.alpha = 1
         }, completion: {
