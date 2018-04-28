@@ -79,10 +79,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title=" " id="9a4-4x-Sfi">
-                        <barButtonItem key="rightBarButtonItem" title="settings" id="t4d-Kc-PBO"/>
+                        <barButtonItem key="rightBarButtonItem" title="settings" id="t4d-Kc-PBO">
+                            <connections>
+                                <action selector="didPressedSettingButton:" destination="BYZ-38-t0r" id="Axr-bc-ipq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="continueButton" destination="JFr-vr-vPM" id="fME-6r-hvs"/>
+                        <outlet property="levelLabel" destination="Tpf-HJ-CWV" id="czD-n5-twQ"/>
+                        <outlet property="percentageLabel" destination="rRz-FI-dhW" id="nTS-Cy-gGe"/>
                         <segue destination="WX5-Lf-7VU" kind="push" id="Jbc-eb-cQu"/>
                     </connections>
                 </viewController>
