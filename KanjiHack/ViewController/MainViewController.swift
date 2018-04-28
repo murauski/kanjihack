@@ -9,9 +9,11 @@
 import UIKit
 import CoreData
 
+let kDeckSizeLimit = 3
+
 enum removeAnimation {
-    case top
-    case down
+    case correct
+    case wrong
 }
 
 class MainViewController: UIViewController {
@@ -26,10 +28,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var hint2: UILabel!
     @IBOutlet weak var value: UILabel!
     
+    @IBOutlet weak var pagerLabel: UILabel!
+    
     var panGesture = UIPanGestureRecognizer()
     var defaultCenter = CGPoint()
-    var questions = [Question]()
-        
+    var currentQuestion = Question()
+    var currentDeck = [Question]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,32 +43,13 @@ class MainViewController: UIViewController {
         defaultCenter = answerView.center
         
         resetViews();
-        
+        generateDeck()
+        mapLabelsWithCurrentQuestion()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try managedContext.fetch(request)
-            questions = (result as? [Question])!
-            
-            let question1 = questions.first
-            
-            hint1.text = question1?.hint1 ?? ""
-            hint2.text = question1?.hint2 ?? ""
-            value.text = question1?.value ?? ""
-            
-        } catch {
-            
-            print("Failed")
-        }
     }
     
     func addTapGestureRecognizerForQuestionView() {
@@ -89,17 +75,22 @@ class MainViewController: UIViewController {
         
         if sender.state == UIGestureRecognizerState.ended {
             if answerView.center.y - defaultCenter.y > 132 {
-                removeAnswerCardWithAnimation(animationType: removeAnimation.down)
+                removeAnswerCardWithAnimation(animationType: removeAnimation.correct)
+                currentQuestion.score = currentQuestion.score - 1
             } else if answerView.center.y < 100 {
-                removeAnswerCardWithAnimation(animationType: removeAnimation.top)
+                removeAnswerCardWithAnimation(animationType: removeAnimation.wrong)
+                currentQuestion.score = currentQuestion.score + 1
             } else {
-                
                 UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.answerView.center = self.defaultCenter
                     self.wrongEmojiLabel.alpha = 0
                     self.rightEmojiLabel.alpha = 0
                 }, completion: nil)
             }
+            
+            
+            saveConext()
+            
         }
     }
     
@@ -131,7 +122,7 @@ class MainViewController: UIViewController {
        
         var yCoordinate = -300
        
-        if animationType == removeAnimation.down {
+        if animationType == removeAnimation.correct {
             yCoordinate = Int(self.view.frame.size.height + 300)
         }
         UIView.animate(withDuration: 0.3, animations: {
@@ -164,7 +155,9 @@ class MainViewController: UIViewController {
         self.answerView.alpha = 0
         self.questionView.alpha = 0
         
-        UIView.animate(withDuration: 2, animations: {
+        self.pushNext()
+        
+        UIView.animate(withDuration: 0.2, animations: {
             self.questionView.alpha = 1
         }, completion: {
             finished in
@@ -191,28 +184,71 @@ class MainViewController: UIViewController {
         })
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     @IBAction func didPressedSettingButton(_ sender: UIBarButtonItem) {
         let settingViewControler = storyboard?.instantiateViewController(withIdentifier: "SettingViewControllerKey") as! SettingsViewController
-       // navigationController.pre
         self.present(settingViewControler, animated: true, completion: nil)
-      //  navigationController?.pushViewController(mainViewController,
-                                             //    animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK : Model helper
+    //TODO: Refactor this temporary logic
+    
+    func generateDeck() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+        request.returnsObjectsAsFaults = false
+        let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: false)
+        let sortDescriptors = [sectionSortDescriptor]
+        request.sortDescriptors = sortDescriptors
+        request.fetchLimit = kDeckSizeLimit
+        
+        do {
+            let result = try managedContext.fetch(request)
+            currentDeck = (result as? [Question])!
+            
+            mapLabelsWithCurrentQuestion()
+            
+        } catch {
+            
+            print("Failed")
+        }
     }
-    */
-
+    
+    func pushNext() {
+        currentDeck.removeFirst()
+        mapLabelsWithCurrentQuestion()
+    }
+    
+    func mapLabelsWithCurrentQuestion() {
+        let question = currentDeck.first
+        
+        guard question != nil else {
+            self.navigationController!.popToRootViewController(animated: true)
+            return
+        }
+        
+        hint1.text = question?.hint1 ?? ""
+        hint2.text = question?.hint2 ?? ""
+        value.text = question?.value ?? ""
+        currentQuestion = question!
+        
+        pagerLabel.text = "\(kDeckSizeLimit - currentDeck.count + 1) of \(kDeckSizeLimit)"
+    }
+    
+    //MARK : CoreData Helper
+    
+    func saveConext() {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            try managedContext.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
 }

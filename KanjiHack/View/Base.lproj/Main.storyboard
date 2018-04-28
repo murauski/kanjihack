@@ -212,6 +212,7 @@
                         <outlet property="answerView" destination="kEe-zy-h8G" id="c8q-Nr-BbO"/>
                         <outlet property="hint1" destination="nWZ-Re-TNd" id="0ng-WN-F8W"/>
                         <outlet property="hint2" destination="74Q-A3-foB" id="PXu-hF-Cyw"/>
+                        <outlet property="pagerLabel" destination="wpn-al-m3M" id="Nhc-qB-2Zw"/>
                         <outlet property="questionView" destination="iqx-js-UOi" id="Su8-UT-oET"/>
                         <outlet property="rightEmojiLabel" destination="FVW-PV-6Jk" id="VJL-Og-OmB"/>
                         <outlet property="value" destination="Jrm-rj-ViT" id="bxW-LR-Kkt"/>
