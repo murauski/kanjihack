@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -97,30 +98,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-js-UOi" userLabel="QuestionView">
-                                <rect key="frame" x="16" y="109" width="288" height="222"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Отвечать на вопрос Отвечать на вопрос " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWZ-Re-TNd" userLabel="hint1">
-                                        <rect key="frame" x="8" y="50" width="272" height="58"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hint 2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74Q-A3-foB" userLabel="hint2">
-                                        <rect key="frame" x="0.0" y="116" width="288" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="222" id="5iU-Yj-WjR"/>
-                                    <constraint firstAttribute="width" constant="288" id="rZ0-p7-LrD"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kEe-zy-h8G" userLabel="AnswerView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="440"/>
                                 <subviews>
@@ -167,8 +144,40 @@
                                     <constraint firstItem="y1v-JO-ueE" firstAttribute="top" secondItem="Jrm-rj-ViT" secondAttribute="bottom" constant="8" id="tTL-dZ-uW2"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-js-UOi" userLabel="QuestionView">
+                                <rect key="frame" x="16" y="109" width="288" height="222"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отвечать на вопрос Отвечать на вопрос " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWZ-Re-TNd" userLabel="hint1">
+                                        <rect key="frame" x="8" y="64" width="272" height="58"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hint 2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74Q-A3-foB" userLabel="hint2">
+                                        <rect key="frame" x="0.0" y="130" width="288" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="fWJ-ZX-hM8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="74Q-A3-foB" secondAttribute="trailing" id="5as-rQ-Ncj"/>
+                                    <constraint firstAttribute="height" constant="222" id="5iU-Yj-WjR"/>
+                                    <constraint firstItem="74Q-A3-foB" firstAttribute="top" secondItem="nWZ-Re-TNd" secondAttribute="bottom" constant="8" symbolic="YES" id="As3-zn-vvX"/>
+                                    <constraint firstItem="74Q-A3-foB" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leading" id="E9L-Yx-IFA"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="centerX" secondItem="74Q-A3-foB" secondAttribute="centerX" id="EJR-0q-52T"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leadingMargin" id="jLH-g1-EHz"/>
+                                    <constraint firstAttribute="bottom" secondItem="74Q-A3-foB" secondAttribute="bottom" constant="63" id="jOr-UM-vmH"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="top" secondItem="iqx-js-UOi" secondAttribute="top" constant="64" id="oFG-UD-8Gc"/>
+                                    <constraint firstAttribute="width" constant="288" id="rZ0-p7-LrD"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpn-al-m3M">
-                                <rect key="frame" x="128.5" y="456" width="63" height="32"/>
+                                <rect key="frame" x="129" y="456" width="63" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Htk-0D-J10"/>
                                 </constraints>
@@ -201,8 +210,11 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="answerView" destination="kEe-zy-h8G" id="c8q-Nr-BbO"/>
+                        <outlet property="hint1" destination="nWZ-Re-TNd" id="0ng-WN-F8W"/>
+                        <outlet property="hint2" destination="74Q-A3-foB" id="PXu-hF-Cyw"/>
                         <outlet property="questionView" destination="iqx-js-UOi" id="Su8-UT-oET"/>
                         <outlet property="rightEmojiLabel" destination="FVW-PV-6Jk" id="VJL-Og-OmB"/>
+                        <outlet property="value" destination="Jrm-rj-ViT" id="bxW-LR-Kkt"/>
                         <outlet property="wrongEmojiLabel" destination="y1v-JO-ueE" id="zfh-PA-sWT"/>
                     </connections>
                 </viewController>
@@ -246,6 +258,9 @@
                                 <state key="normal" title="Update">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="updateButtonDidPressed:" destination="PBU-4g-Khe" eventType="touchUpInside" id="fGh-VG-aiX"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updated 28.04.2018 12:57" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZ7-Ld-13L">
                                 <rect key="frame" x="0.0" y="328" width="320" height="20"/>
@@ -274,6 +289,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uk2-h0-zdy"/>
                     </view>
+                    <connections>
+                        <outlet property="updateButton" destination="SA4-Uz-wr8" id="611-b1-w0Z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MbY-U3-lIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

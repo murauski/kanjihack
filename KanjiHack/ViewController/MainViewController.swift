@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum removeAnimation {
     case top
@@ -21,9 +22,14 @@ class MainViewController: UIViewController {
     @IBOutlet weak var rightEmojiLabel: UILabel!
     @IBOutlet weak var wrongEmojiLabel: UILabel!
     
+    @IBOutlet weak var hint1: UILabel!
+    @IBOutlet weak var hint2: UILabel!
+    @IBOutlet weak var value: UILabel!
+    
     var panGesture = UIPanGestureRecognizer()
     var defaultCenter = CGPoint()
-    
+    var questions = [Question]()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +38,32 @@ class MainViewController: UIViewController {
         defaultCenter = answerView.center
         
         resetViews();
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try managedContext.fetch(request)
+            questions = (result as? [Question])!
+            
+            let question1 = questions.first
+            
+            hint1.text = question1?.hint1 ?? ""
+            hint2.text = question1?.hint2 ?? ""
+            value.text = question1?.value ?? ""
+            
+        } catch {
+            
+            print("Failed")
+        }
     }
     
     func addTapGestureRecognizerForQuestionView() {
