@@ -13,15 +13,68 @@ class MainViewController: UIViewController {
     @IBOutlet weak var questionView: UIView!
     @IBOutlet weak var answerView: UIView!
     
+    var panGesture = UIPanGestureRecognizer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        //create a new button
+        addTapGestureRecognizerForQuestionView()
+        addPanGestureForAnswerView()
+    }
+    
+    func addTapGestureRecognizerForQuestionView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         questionView.addGestureRecognizer(tap)
     }
+    
+    func addPanGestureForAnswerView() {
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView(_:)))
+        answerView.addGestureRecognizer(panGesture)
+    }
 
+    @objc func draggedView(_ sender: UIPanGestureRecognizer){
+        self.view.bringSubview(toFront: answerView)
+        let translation = sender.translation(in: self.view)
+//        answerView.center = CGPoint(x: answerView.center.x + translation.x, y: answerView.center.y + translation.y)
+        answerView.center = CGPoint(x: answerView.center.x, y: answerView.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.view)
+        
+        print("x - \(answerView.center.x) y - \(answerView.center.y)")
+        
+        if answerView.center.y < 100 {
+            removeAnswerCardWithAnimation()
+        }
+        
+    }
+    
+    func removeAnswerCardWithAnimation() {
+       
+        UIView.animate(withDuration: 0.3, animations: {
+            self.answerView.center = CGPoint(x: self.answerView.center.x, y: -300)
+        }, completion: {
+            finished in
+            self.resetView()
+        })
+    }
+    
+    func resetView() {
+        
+        self.answerView.alpha = 0
+        self.questionView.alpha = 0
+        self.questionView.center = self.view.center
+        self.answerView.center = self.view.center
+        
+        UIView.animate(withDuration: 3, animations: {
+            self.answerView.alpha = 1
+            self.questionView.alpha = 1
+        }, completion: {
+            finished in
+            //self.myView.isHidden = false
+    //        self.showAnswerViewWithAnimation()
+        })
+        
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
 
         answerView.alpha = 0
@@ -39,7 +92,6 @@ class MainViewController: UIViewController {
             self.answerView.alpha = 1
         }, completion: {
             finished in
-            //self.myView.isHidden = false
         })
     }
     

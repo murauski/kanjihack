@@ -104,10 +104,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kEe-zy-h8G" userLabel="AnswerView">
-                                <rect key="frame" x="16" y="152" width="288" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kEe-zy-h8G" userLabel="AnswerView">
+                                <rect key="frame" x="16" y="141" width="288" height="222"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="Jrm-rj-ViT">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="222"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="120"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.56904578210000001" blue="0.57461684940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Jrm-rj-ViT" secondAttribute="trailing" id="8CY-Sy-B14"/>
+                                    <constraint firstAttribute="bottom" secondItem="Jrm-rj-ViT" secondAttribute="bottom" id="95E-3T-EKB"/>
+                                    <constraint firstAttribute="width" constant="288" id="Qn5-kf-Fhw"/>
+                                    <constraint firstAttribute="height" constant="222" id="VSt-v5-2XR"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="leading" secondItem="kEe-zy-h8G" secondAttribute="leading" id="WRd-W0-WEA"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="top" secondItem="kEe-zy-h8G" secondAttribute="top" id="ez6-Tf-F4t"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-js-UOi" userLabel="QuestionView">
                                 <rect key="frame" x="16" y="141" width="288" height="222"/>
@@ -132,6 +147,10 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kEe-zy-h8G" firstAttribute="centerX" secondItem="stf-Z5-3Pe" secondAttribute="centerX" id="HT4-U4-N3z"/>
+                            <constraint firstItem="kEe-zy-h8G" firstAttribute="centerY" secondItem="stf-Z5-3Pe" secondAttribute="centerY" id="vH0-hz-7cT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="o9x-Fg-rPJ"/>
                     </view>
                     <navigationItem key="navigationItem" id="06f-aK-RyZ">
