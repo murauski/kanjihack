@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="1020" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="UdZ-JG-8tJ">
             <objects>
-                <viewController id="WX5-Lf-7VU" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainViewControllerKey" id="WX5-Lf-7VU" customClass="MainViewController" customModule="KanjiHack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="stf-Z5-3Pe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

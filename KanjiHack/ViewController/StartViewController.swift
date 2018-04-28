@@ -21,8 +21,8 @@ class StartViewController: UIViewController {
     }
 
     @IBAction func startButtonDidPressed(_ sender: UIButton) {
-        let mainViewController = storyboard?.instantiateViewController(withIdentifier: "questionViewControllerKey") as! QuestionsViewController
-        navigationController?.pushViewController(questionViewController,
+        let mainViewController = storyboard?.instantiateViewController(withIdentifier: "mainViewControllerKey") as! MainViewController
+        navigationController?.pushViewController(mainViewController,
                                                  animated: true)
     }
     
