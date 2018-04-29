@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-let kDeckSizeLimit = 3
+var kDeckSizeLimit = 3
 
 enum removeAnimation {
     case correct
@@ -89,7 +89,7 @@ class MainViewController: UIViewController {
             }
             
             
-            saveConext()
+           CoreDataManager.sharedManager.saveContext()
             
         }
     }
@@ -191,30 +191,15 @@ class MainViewController: UIViewController {
     }
     
     //MARK : Model helper
-    //TODO: Refactor this temporary logic
     
     func generateDeck() {
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
-        let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: false)
-        let sortDescriptors = [sectionSortDescriptor]
-        request.sortDescriptors = sortDescriptors
-        request.fetchLimit = kDeckSizeLimit
-        
-        do {
-            let result = try managedContext.fetch(request)
-            currentDeck = (result as? [Question])!
-            
-            mapLabelsWithCurrentQuestion()
-            
-        } catch {
-            
-            print("Failed")
+        currentDeck = CoreDataManager.sharedManager.getCurrentDeckWithLimit(limit: kDeckSizeLimit)
+        if (currentDeck.count != kDeckSizeLimit) {
+            kDeckSizeLimit = currentDeck.count
         }
+        
+        mapLabelsWithCurrentQuestion()
     }
     
     func pushNext() {
@@ -236,19 +221,5 @@ class MainViewController: UIViewController {
         currentQuestion = question!
         
         pagerLabel.text = "\(kDeckSizeLimit - currentDeck.count + 1) of \(kDeckSizeLimit)"
-    }
-    
-    //MARK : CoreData Helper
-    
-    func saveConext() {
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        do {
-            try managedContext.save()
-        } catch {
-            print("Failed saving")
-        }
     }
 }

@@ -29,7 +29,7 @@ class StartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
       
-        getCurrentLevel()
+        updateProgressValues()
     }
     
     //MARK : IBActions
@@ -45,55 +45,14 @@ class StartViewController: UIViewController {
         self.present(settingViewControler, animated: true, completion: nil)
     }
     
-    func getCurrentLevel() {
+    func updateProgressValues() {
+        let currentLevel = CoreDataManager.sharedManager.getCurrentLevel()
+        levelLabel.text = "Level \(currentLevel)"
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let questionWithCurrentScoreCount = CoreDataManager.sharedManager.getQuestionsCountForLevel(level: currentLevel)
+        let totalQuestonsCount = CoreDataManager.sharedManager.getTotalQuestionsCount()
         
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
-        let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: true)
-        let sortDescriptors = [sectionSortDescriptor]
-        request.sortDescriptors = sortDescriptors
-        request.fetchLimit = 1
-        
-        do {
-            let result = try managedContext.fetch(request)
-            let questions = (result as? [Question])!
-
-            guard questions.first != nil else {
-                currentLevel = 0
-                levelLabel.text = "Level \(currentLevel)"
-                return
-            }
-            currentLevel =  Int(abs((questions.first?.score)!))
-            levelLabel.text = "Level \(currentLevel)"
-
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-            fetchRequest.predicate = NSPredicate(format: "score == %i", currentLevel)
-
-            do {
-
-                let questionWithMinScoreCount = try managedContext.count(for: fetchRequest)
-
-                
-                let totalQuestionsCount = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-                do {
-                    let totalScoreCount = try managedContext.count(for: totalQuestionsCount)
-                    
-                     percentageLabel.text = "\(100*questionWithMinScoreCount/totalScoreCount)%"
-                } catch {
-                    print("hello world")
-                }
-
-            } catch {
-                print("Failed 2 ")
-            }
-
-        } catch {
-            print("Failed")
-        }
-        
+        percentageLabel.text = "\(Int((1-Double(questionWithCurrentScoreCount)/Double(totalQuestonsCount))*100))%"
     }
 }
 

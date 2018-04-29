@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9274FC9F2095C5A6009FF01F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */; };
 		92C9BAC420944C580011F74C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAC320944C580011F74C /* AppDelegate.swift */; };
 		92C9BAC620944C580011F74C /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAC520944C580011F74C /* StartViewController.swift */; };
 		92C9BAC920944C580011F74C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C9BAC720944C580011F74C /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		92C9BAC020944C580011F74C /* KanjiHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KanjiHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C9BAC320944C580011F74C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C9BAC520944C580011F74C /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9274FC9D2095C58D009FF01F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		92C9BAB720944C580011F74C = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				92C9BADA209453090011F74C /* Application */,
+				9274FC9D2095C58D009FF01F /* Service */,
 				92C9BADD209453310011F74C /* ViewController */,
 				92C9BADC209453270011F74C /* View */,
 				92C9BADB2094531B0011F74C /* Model */,
@@ -190,6 +201,7 @@
 				92C9BACC20944C580011F74C /* KanjiHack.xcdatamodeld in Sources */,
 				92C9BAC620944C580011F74C /* StartViewController.swift in Sources */,
 				92C9BAC420944C580011F74C /* AppDelegate.swift in Sources */,
+				9274FC9F2095C5A6009FF01F /* CoreDataManager.swift in Sources */,
 				92C9BAE42094D7220011F74C /* QuestionDTO.swift in Sources */,
 				92C9BAD920944EBF0011F74C /* MainViewController.swift in Sources */,
 				92C9BAE22094788D0011F74C /* SettingsViewController.swift in Sources */,

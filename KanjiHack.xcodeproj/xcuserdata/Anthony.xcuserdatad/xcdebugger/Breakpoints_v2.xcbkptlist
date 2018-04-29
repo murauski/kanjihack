@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "KanjiHack/ViewController/StartViewController.swift"
-            timestampString = "546635301.542174"
+            filePath = "KanjiHack/Service/CoreDataManager.swift"
+            timestampString = "546691047.445258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "getCurrentLevel()"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "saveNewQuestions(questions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

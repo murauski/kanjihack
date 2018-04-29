@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class SettingsViewController: UIViewController {
 
@@ -100,34 +99,36 @@ class SettingsViewController: UIViewController {
     
     func saveQuestionsToDb() {
         
-        DispatchQueue.main.async {
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: managedContext)
-            
-            for item in self.questions {
-                let newQuestion = NSManagedObject(entity: userEntity!, insertInto: managedContext)
-                newQuestion.setValue(item.hint1, forKey: "hint1")
-                newQuestion.setValue(item.hint2, forKey: "hint2")
-                newQuestion.setValue(item.value, forKey: "value")
-                newQuestion.setValue(0, forKey: "score")
-                
-            }
-            
-            do {
-                try managedContext.save()
-                
-                let alertController = UIAlertController(title: "Everyting is good", message:
-                    "Added: Updated \n TODO", preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-                
-                self.present(alertController, animated: true, completion: nil)
-                
-            } catch {
-                print("Failed saving")
-            }
-        }
+       CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
+//        DispatchQueue.main.async {
+//
+//
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//           // let managedContext = appDelegate.persistentContainer.viewContext
+//            let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: managedContext)
+//
+//            for item in self.questions {
+//                let newQuestion = NSManagedObject(entity: userEntity!, insertInto: managedContext)
+//                newQuestion.setValue(item.hint1, forKey: "hint1")
+//                newQuestion.setValue(item.hint2, forKey: "hint2")
+//                newQuestion.setValue(item.value, forKey: "value")
+//                newQuestion.setValue(0, forKey: "score")
+//
+//            }
+//
+//            do {
+//                try managedContext.save()
+//
+//                let alertController = UIAlertController(title: "Everyting is good", message:
+//                    "Added: Updated \n TODO", preferredStyle: UIAlertControllerStyle.alert)
+//                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+//
+//                self.present(alertController, animated: true, completion: nil)
+//
+//            } catch {
+//                print("Failed saving")
+//            }
+//        }
     }
 
     /*
