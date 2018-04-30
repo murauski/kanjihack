@@ -41,7 +41,6 @@ class CoreDataManager {
             newQuestion.setValue(item.hint2, forKey: "hint2")
             newQuestion.setValue(item.value, forKey: "value")
             newQuestion.setValue(0, forKey: "score")
-            
         }
         
         saveContext()

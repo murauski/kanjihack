@@ -50,6 +50,10 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if CoreDataManager.sharedManager.getTotalQuestionsCount() == 0 {
+            navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     func addTapGestureRecognizerForQuestionView() {
