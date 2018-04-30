@@ -199,10 +199,6 @@ class MainViewController: UIViewController {
     func generateDeck() {
         
         currentDeck = CoreDataManager.sharedManager.getCurrentDeckWithLimit(limit: kDeckSizeLimit)
-        if (currentDeck.count != kDeckSizeLimit) {
-            kDeckSizeLimit = currentDeck.count
-        }
-        
         mapLabelsWithCurrentQuestion()
     }
     
