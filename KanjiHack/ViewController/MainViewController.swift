@@ -40,6 +40,8 @@ class MainViewController: UIViewController {
 
         addTapGestureRecognizerForQuestionView()
         addPanGestureForAnswerView()
+        addTapGestureRecognizerForAnswerView()
+        
         defaultCenter = answerView.center
         
         resetViews();
@@ -57,13 +59,18 @@ class MainViewController: UIViewController {
     }
     
     func addTapGestureRecognizerForQuestionView() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnQuestionView(_:)))
         questionView.addGestureRecognizer(tap)
     }
     
     func addPanGestureForAnswerView() {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.draggedView(_:)))
         answerView.addGestureRecognizer(panGesture)
+    }
+    
+    func addTapGestureRecognizerForAnswerView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnAnswerView(_:)))
+        answerView.addGestureRecognizer(tap)
     }
 
     @objc func draggedView(_ sender: UIPanGestureRecognizer){
@@ -168,7 +175,7 @@ class MainViewController: UIViewController {
         })
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleTapOnQuestionView(_ sender: UITapGestureRecognizer) {
 
         answerView.alpha = 0
         UIView.animate(withDuration: 0.15, animations: {
@@ -177,6 +184,18 @@ class MainViewController: UIViewController {
             finished in
             //self.myView.isHidden = false
             self.showAnswerViewWithAnimation()
+        })
+    }
+    
+    @objc func handleTapOnAnswerView(_ sender: UITapGestureRecognizer) {
+        
+        answerView.alpha = 0
+        questionView.alpha = 0
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            self.questionView.alpha = 1
+        }, completion: {
+            finished in
         })
     }
     
