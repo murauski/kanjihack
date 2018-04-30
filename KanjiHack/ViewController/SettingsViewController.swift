@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SettingsViewController: UIViewController {
 
@@ -37,7 +38,6 @@ class SettingsViewController: UIViewController {
     
     @IBAction func updateButtonDidPressed(_ sender: UIButton) {
         
-
         guard let url = URL(string: "https://script.google.com/macros/s/AKfycbz9OoDJYQxYRjzfmqzV_BnXc3BLkZxMN3MKNTWMU6mw8iIVHT0G/exec") else {
             print("Error: cannot create URL")
             return
@@ -49,12 +49,23 @@ class SettingsViewController: UIViewController {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
+    	SVProgressHUD.show()
+        
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in
+            
+            SVProgressHUD.dismiss()
             // check for any errors
             guard error == nil else {
-                print("error calling GET on /todos/1")
+                print("error calling GET")
                 print(error!)
+                
+                let alertController = UIAlertController(title: "error calling GET", message:
+                    "Not so good", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+                
+                self.present(alertController, animated: true, completion: nil)
+                
                 return
             }
             // make sure we got data
@@ -98,47 +109,12 @@ class SettingsViewController: UIViewController {
     }
     
     func saveQuestionsToDb() {
-        
        CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
-//        DispatchQueue.main.async {
-//
-//
-//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//           // let managedContext = appDelegate.persistentContainer.viewContext
-//            let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: managedContext)
-//
-//            for item in self.questions {
-//                let newQuestion = NSManagedObject(entity: userEntity!, insertInto: managedContext)
-//                newQuestion.setValue(item.hint1, forKey: "hint1")
-//                newQuestion.setValue(item.hint2, forKey: "hint2")
-//                newQuestion.setValue(item.value, forKey: "value")
-//                newQuestion.setValue(0, forKey: "score")
-//
-//            }
-//
-//            do {
-//                try managedContext.save()
-//
-//                let alertController = UIAlertController(title: "Everyting is good", message:
-//                    "Added: Updated \n TODO", preferredStyle: UIAlertControllerStyle.alert)
-//                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-//
-//                self.present(alertController, animated: true, completion: nil)
-//
-//            } catch {
-//                print("Failed saving")
-//            }
-//        }
+        
+        let alertController = UIAlertController(title: "Everyting is good", message:
+            "Added: Updated \n TODO", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

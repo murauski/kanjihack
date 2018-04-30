@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,10 +17,14 @@
 		92C9BAD920944EBF0011F74C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAD820944EBF0011F74C /* MainViewController.swift */; };
 		92C9BAE22094788D0011F74C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAE12094788D0011F74C /* SettingsViewController.swift */; };
 		92C9BAE42094D7220011F74C /* QuestionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAE32094D7220011F74C /* QuestionDTO.swift */; };
+		EC589996AB8138FF9A4E9C27 /* Pods_KanjiHack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C40EF46E9228641032CAF16 /* Pods_KanjiHack.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C40EF46E9228641032CAF16 /* Pods_KanjiHack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KanjiHack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E78DAC8FCB84B12E9D2CE9 /* Pods-KanjiHack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KanjiHack.release.xcconfig"; path = "Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack.release.xcconfig"; sourceTree = "<group>"; };
 		9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		92BC3234209733B400149D90 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		92C9BAC020944C580011F74C /* KanjiHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KanjiHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C9BAC320944C580011F74C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C9BAC520944C580011F74C /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -32,6 +36,7 @@
 		92C9BAD820944EBF0011F74C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		92C9BAE12094788D0011F74C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		92C9BAE32094D7220011F74C /* QuestionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDTO.swift; sourceTree = "<group>"; };
+		ABB7E4BF7811E5DF2AE6E21F /* Pods-KanjiHack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KanjiHack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC589996AB8138FF9A4E9C27 /* Pods_KanjiHack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,11 +59,29 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		92BC32302097338200149D90 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Vendors;
+			sourceTree = "<group>";
+		};
+		92BC3233209733B400149D90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				92BC3234209733B400149D90 /* QuartzCore.framework */,
+				3C40EF46E9228641032CAF16 /* Pods_KanjiHack.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		92C9BAB720944C580011F74C = {
 			isa = PBXGroup;
 			children = (
 				92C9BAC220944C580011F74C /* KanjiHack */,
 				92C9BAC120944C580011F74C /* Products */,
+				92BC3233209733B400149D90 /* Frameworks */,
+				9C0421F69EE7417997A107FA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,6 +102,7 @@
 				92C9BADC209453270011F74C /* View */,
 				92C9BADB2094531B0011F74C /* Model */,
 				92C9BADE209453500011F74C /* Supporting Files */,
+				92BC32302097338200149D90 /* Vendors */,
 				92C9BAD220944C5B0011F74C /* Info.plist */,
 			);
 			path = KanjiHack;
@@ -127,6 +152,15 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9C0421F69EE7417997A107FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ABB7E4BF7811E5DF2AE6E21F /* Pods-KanjiHack.debug.xcconfig */,
+				66E78DAC8FCB84B12E9D2CE9 /* Pods-KanjiHack.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +168,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92C9BAD520944C5B0011F74C /* Build configuration list for PBXNativeTarget "KanjiHack" */;
 			buildPhases = (
+				9422C0D7CD3EA5F86853C30C /* [CP] Check Pods Manifest.lock */,
 				92C9BABC20944C580011F74C /* Sources */,
 				92C9BABD20944C580011F74C /* Frameworks */,
 				92C9BABE20944C580011F74C /* Resources */,
+				55F9F3529931B051E1224617 /* [CP] Embed Pods Frameworks */,
+				18032D7278C7F90A0ED6C8D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -159,11 +196,12 @@
 				TargetAttributes = {
 					92C9BABF20944C580011F74C = {
 						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 92C9BABB20944C580011F74C /* Build configuration list for PBXProject "KanjiHack" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -192,6 +230,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		18032D7278C7F90A0ED6C8D2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		55F9F3529931B051E1224617 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9422C0D7CD3EA5F86853C30C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KanjiHack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92C9BABC20944C580011F74C /* Sources */ = {
@@ -338,23 +430,20 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		92C9BAD620944C5B0011F74C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABB7E4BF7811E5DF2AE6E21F /* Pods-KanjiHack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9QL3M8K88C;
 				INFOPLIST_FILE = KanjiHack/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Anthony-Marchenko.KanjiHack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -364,15 +453,13 @@
 		};
 		92C9BAD720944C5B0011F74C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66E78DAC8FCB84B12E9D2CE9 /* Pods-KanjiHack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9QL3M8K88C;
 				INFOPLIST_FILE = KanjiHack/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Anthony-Marchenko.KanjiHack";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
