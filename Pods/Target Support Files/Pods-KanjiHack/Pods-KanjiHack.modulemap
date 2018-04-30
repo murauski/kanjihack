@@ -1,0 +1,6 @@
+framework module Pods_KanjiHack {
+  umbrella header "Pods-KanjiHack-umbrella.h"
+
+  export *
+  module * { export * }
+}

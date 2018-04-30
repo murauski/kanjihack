@@ -122,6 +122,17 @@ class CoreDataManager {
             return 0
         }
     }
+    
+    func resetDB() {
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let deleteAllQuestions = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Question"))
+        do {
+            try context.execute(deleteAllQuestions)
+        }
+        catch {
+            print(error)
+        }
+    }
 
     func saveContext () {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext

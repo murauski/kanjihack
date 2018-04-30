@@ -108,6 +108,21 @@ class SettingsViewController: UIViewController {
        
     }
     
+    @IBAction func resetButtonDidPressed(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Reset all data", message:
+            "This will delete all your data from DB", preferredStyle: UIAlertControllerStyle.alert)
+
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { (action) in
+            SVProgressHUD.show(withStatus: "Reseting...")
+            CoreDataManager.sharedManager.resetDB()
+            SVProgressHUD.dismiss(withDelay: 1.5)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     func saveQuestionsToDb() {
        CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
         
