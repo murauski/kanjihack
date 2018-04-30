@@ -318,6 +318,7 @@
                     </view>
                     <connections>
                         <outlet property="updateButton" destination="SA4-Uz-wr8" id="611-b1-w0Z"/>
+                        <outlet property="updatedTimeLabel" destination="mZ7-Ld-13L" id="pcN-4M-jOQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MbY-U3-lIw" userLabel="First Responder" sceneMemberID="firstResponder"/>

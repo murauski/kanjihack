@@ -16,6 +16,8 @@ class SettingsViewController: UIViewController {
     var dataTask: URLSessionDataTask? = nil
     var questions = [QuestionDTO]()
     
+    @IBOutlet weak var updatedTimeLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,9 +26,29 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateLastSynchronizationLabel()
+    }
+    
+    func updateLastSynchronizationLabel() {
+        
+        DispatchQueue.main.async {
+            if Settings.sharedManager.getUpdatedTime() == nil {
+                self.updatedTimeLabel.text = "Updated: Never"
+            } else {
+                
+                let dateFormatterGet = DateFormatter()
+                dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                
+                if let date = Settings.sharedManager.getUpdatedTime(){
+                     self.updatedTimeLabel.text = "Updated: \(dateFormatterGet.string(from: date))"
+                } else {
+                    print("There was an error decoding the string")
+                }
+            }
+        }
     }
     
     // MARK: - IBActions
@@ -49,7 +71,7 @@ class SettingsViewController: UIViewController {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
-    	SVProgressHUD.show()
+    	 SVProgressHUD.show(withStatus: "Updating...")
         
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in
@@ -99,6 +121,8 @@ class SettingsViewController: UIViewController {
                 }
 
                 self.saveQuestionsToDb()
+                self.updateLastSynchronizationLabel()
+                
             } catch  {
                 print("error trying to convert data to JSON")
                 return
@@ -115,7 +139,13 @@ class SettingsViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive, handler: { (action) in
             SVProgressHUD.show(withStatus: "Reseting...")
             CoreDataManager.sharedManager.resetDB()
-            SVProgressHUD.dismiss(withDelay: 1.5)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                SVProgressHUD.dismiss()
+                Settings.sharedManager.resetUpdatedTime()
+                self.updateLastSynchronizationLabel()
+            }
+            
         }))
         
         alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
@@ -123,13 +153,9 @@ class SettingsViewController: UIViewController {
     }
     
     
+    
     func saveQuestionsToDb() {
        CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
-        
-        let alertController = UIAlertController(title: "Everyting is good", message:
-            "Added: Updated \n TODO", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
+       Settings.sharedManager.setUpdatedTime()
     }
 }

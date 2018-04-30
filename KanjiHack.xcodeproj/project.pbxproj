@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		924550E92097425B008634EB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924550E82097425B008634EB /* Settings.swift */; };
 		9274FC9F2095C5A6009FF01F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */; };
 		92C9BAC420944C580011F74C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAC320944C580011F74C /* AppDelegate.swift */; };
 		92C9BAC620944C580011F74C /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9BAC520944C580011F74C /* StartViewController.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		3C40EF46E9228641032CAF16 /* Pods_KanjiHack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KanjiHack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E78DAC8FCB84B12E9D2CE9 /* Pods-KanjiHack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KanjiHack.release.xcconfig"; path = "Pods/Target Support Files/Pods-KanjiHack/Pods-KanjiHack.release.xcconfig"; sourceTree = "<group>"; };
+		924550E82097425B008634EB /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		92BC3234209733B400149D90 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		92C9BAC020944C580011F74C /* KanjiHack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KanjiHack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				9274FC9E2095C5A6009FF01F /* CoreDataManager.swift */,
+				924550E82097425B008634EB /* Settings.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			files = (
 				92C9BACC20944C580011F74C /* KanjiHack.xcdatamodeld in Sources */,
 				92C9BAC620944C580011F74C /* StartViewController.swift in Sources */,
+				924550E92097425B008634EB /* Settings.swift in Sources */,
 				92C9BAC420944C580011F74C /* AppDelegate.swift in Sources */,
 				9274FC9F2095C5A6009FF01F /* CoreDataManager.swift in Sources */,
 				92C9BAE42094D7220011F74C /* QuestionDTO.swift in Sources */,
