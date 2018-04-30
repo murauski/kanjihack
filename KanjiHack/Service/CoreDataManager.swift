@@ -39,7 +39,7 @@ class CoreDataManager {
         
         //Synchronization logic
         //1. Mark all questons as not sync
-        markAllQuestionsAsNotSynchronized()
+        self.markAllQuestionsAsNotSynchronized()
         
         
         for item in questions {
@@ -49,7 +49,9 @@ class CoreDataManager {
                 let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
                 request.returnsObjectsAsFaults = true
                 request.predicate = NSPredicate(format: "value == %@", item.value)
+                
                 let fetchedResults = try managedContext.fetch(request) as! [Question]
+                
                 
                 let newQuestionItem = fetchedResults.first
                 
@@ -82,10 +84,13 @@ class CoreDataManager {
             }
         }
         
-        
         // 3. Delete all not sync items
-        deletedQuestions = deleteAllNotSyncQuestion()
-
+        
+        deletedQuestions = self.deleteAllNotSyncQuestion()
+        
+        
+        self.saveContext()
+        
         
         return SyncStatusDTO(added: addedQuestions, updated: updatedQuestions, deleted: deletedQuestions, total: getTotalQuestionsCount())
     }
@@ -116,7 +121,7 @@ class CoreDataManager {
         
         do {
             let objects = try managedContext.fetch(request) as! [Question]
-
+            
             for object in objects {
                 managedContext.delete(object)
             }
@@ -129,7 +134,7 @@ class CoreDataManager {
     }
     
     func getCurrentDeckWithLimit(limit: Int) -> [Question] {
-    	let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
         request.returnsObjectsAsFaults = true
         let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: false)
@@ -176,7 +181,7 @@ class CoreDataManager {
     }
     
     func getQuestionsCountForLevel(level: Int) -> Int {
-       
+        
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
         fetchRequest.predicate = NSPredicate(format: "score == %i", level)
@@ -204,7 +209,7 @@ class CoreDataManager {
     }
     
     func resetDB() {
-
+        
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let deleteAllQuestions = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Question"))
         do {

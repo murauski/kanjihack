@@ -33,7 +33,6 @@ class SettingsViewController: UIViewController {
     
     func updateLastSynchronizationLabel() {
         
-        DispatchQueue.main.async {
             if Settings.sharedManager.getUpdatedTime() == nil {
                 self.updatedTimeLabel.text = "Updated: Never"
             } else {
@@ -48,7 +47,6 @@ class SettingsViewController: UIViewController {
                     print("There was an error decoding the string")
                 }
             }
-        }
     }
     
     // MARK: - IBActions
@@ -121,8 +119,10 @@ class SettingsViewController: UIViewController {
                     
                 }
 
-                self.saveQuestionsToDb()
-                self.updateLastSynchronizationLabel()
+                DispatchQueue.main.sync {
+                    self.saveQuestionsToDb()
+                    self.updateLastSynchronizationLabel()
+                }
                 
             } catch  {
                 print("error trying to convert data to JSON")
@@ -156,15 +156,13 @@ class SettingsViewController: UIViewController {
     
     
     func saveQuestionsToDb() {
-       let statusDTO = CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
+        let statusDTO = CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
         
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Success", message:
-                "Added: \(statusDTO.added)\nUpdated:\(statusDTO.updated)\nDeleted:\(statusDTO.deleted)\n\nTotal:\(statusDTO.total)", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
-       Settings.sharedManager.setUpdatedTime()
+        let alertController = UIAlertController(title: "Success", message:
+            "Added: \(statusDTO.added)\nUpdated:\(statusDTO.updated)\nDeleted:\(statusDTO.deleted)\n\nTotal:\(statusDTO.total)", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+        Settings.sharedManager.setUpdatedTime()
     }
 }
