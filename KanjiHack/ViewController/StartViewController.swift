@@ -52,7 +52,20 @@ class StartViewController: UIViewController {
         let questionWithCurrentScoreCount = CoreDataManager.sharedManager.getQuestionsCountForLevel(level: currentLevel)
         let totalQuestonsCount = CoreDataManager.sharedManager.getTotalQuestionsCount()
         
+        guard totalQuestonsCount != 0 else {
+            levelLabel.text = "Level 0"
+            percentageLabel.text = "0%"
+            return
+        }
+        
         percentageLabel.text = "\(Int((1-Double(questionWithCurrentScoreCount)/Double(totalQuestonsCount))*100))%"
+        
+        //New level special case
+        if questionWithCurrentScoreCount == 0 {
+           levelLabel.text = "Level \(currentLevel + 1)"
+           percentageLabel.text = "0%"
+        }
+        
     }
 }
 
