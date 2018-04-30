@@ -55,7 +55,6 @@ class SettingsViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func updateButtonDidPressed(_ sender: UIButton) {
         
         guard let url = URL(string: "https://script.google.com/macros/s/AKfycbz9OoDJYQxYRjzfmqzV_BnXc3BLkZxMN3MKNTWMU6mw8iIVHT0G/exec") else {
@@ -152,8 +151,6 @@ class SettingsViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    
     
     func saveQuestionsToDb() {
         let statusDTO = CoreDataManager.sharedManager.saveNewQuestions(questions: questions)

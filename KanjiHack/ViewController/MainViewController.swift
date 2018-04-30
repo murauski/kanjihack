@@ -47,7 +47,6 @@ class MainViewController: UIViewController {
         resetViews();
         generateDeck()
         mapLabelsWithCurrentQuestion()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

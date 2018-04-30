@@ -19,7 +19,6 @@ class CoreDataManager {
         
         let container = NSPersistentContainer(name: "KanjiHack")
         
-        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             
             if let error = error as NSError? {

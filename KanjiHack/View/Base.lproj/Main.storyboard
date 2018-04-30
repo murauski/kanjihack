@@ -79,6 +79,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title=" " id="9a4-4x-Sfi">
+                        <barButtonItem key="backBarButtonItem" title=" " id="vQY-FG-fKH"/>
                         <barButtonItem key="rightBarButtonItem" image="settings" id="t4d-Kc-PBO">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>

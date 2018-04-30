@@ -58,7 +58,7 @@ class StartViewController: UIViewController {
             return
         }
         
-        percentageLabel.text = "\(Int((Double(questionWithCurrentScoreCount)/Double(totalQuestonsCount))*100))%"
+        percentageLabel.text = "\(Int((Double(questionWithCurrentScoreCount)/Double(totalQuestonsCount)*100)))%"
         
         if currentLevel == 0 {
             levelLabel.text = "Let's play!"
