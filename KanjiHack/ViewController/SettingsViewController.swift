@@ -73,7 +73,7 @@ class SettingsViewController: UIViewController {
         
         SVProgressHUD.show(withStatus: "Updating...")
         
-        self.questions = [QuestionDTO]()
+        questions = [QuestionDTO]()
         
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in
@@ -156,7 +156,15 @@ class SettingsViewController: UIViewController {
     
     
     func saveQuestionsToDb() {
-       CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
+       let statusDTO = CoreDataManager.sharedManager.saveNewQuestions(questions: questions)
+        
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Success", message:
+                "Added: \(statusDTO.added)\nUpdated:\(statusDTO.updated)\nDeleted:\(statusDTO.deleted)\n\nTotal:\(statusDTO.total)", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
        Settings.sharedManager.setUpdatedTime()
     }
 }

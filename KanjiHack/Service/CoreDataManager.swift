@@ -29,10 +29,9 @@ class CoreDataManager {
         return container
     }()
     
-    func saveNewQuestions(questions: [QuestionDTO]) {
+    func saveNewQuestions(questions: [QuestionDTO]) -> SyncStatusDTO {
         
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: context)
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         var addedQuestions = 0
         var updatedQuestions = 0
@@ -48,21 +47,27 @@ class CoreDataManager {
             do {
                 //2. Update question or create a new one
                 let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+                request.returnsObjectsAsFaults = true
                 request.predicate = NSPredicate(format: "value == %@", item.value)
-                let fetchedResults = try context.fetch(request) as! [Question]
+                let fetchedResults = try managedContext.fetch(request) as! [Question]
                 
                 let newQuestionItem = fetchedResults.first
                 
                 if let existingQuestion = newQuestionItem {
                     // update
-                    existingQuestion.setValue(item.hint1, forKey: "hint1")
-                    existingQuestion.setValue(item.hint2, forKey: "hint2")
-                    existingQuestion.setValue(item.value, forKey: "value")
+                    
+                    if existingQuestion.hint1 != item.hint1 || existingQuestion.hint2 != item.hint2 {
+                        existingQuestion.setValue(item.hint1, forKey: "hint1")
+                        existingQuestion.setValue(item.hint2, forKey: "hint2")
+                        
+                        updatedQuestions += 1
+                    }
+                    
                     existingQuestion.setValue(NSNumber(value: true), forKey: "isSync")
                     
-                    updatedQuestions += 1
                 } else {
-                    let newQuestion = NSManagedObject(entity: userEntity!, insertInto: context)
+                    let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: managedContext)
+                    let newQuestion = NSManagedObject(entity: userEntity!, insertInto: managedContext)
                     newQuestion.setValue(item.hint1, forKey: "hint1")
                     newQuestion.setValue(item.hint2, forKey: "hint2")
                     newQuestion.setValue(item.value, forKey: "value")
@@ -77,42 +82,43 @@ class CoreDataManager {
             }
         }
         
-        saveContext()
         
         // 3. Delete all not sync items
         deletedQuestions = deleteAllNotSyncQuestion()
+
         
-        saveContext()
+        return SyncStatusDTO(added: addedQuestions, updated: updatedQuestions, deleted: deletedQuestions, total: getTotalQuestionsCount())
     }
     
     func markAllQuestionsAsNotSynchronized() {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
+        request.returnsObjectsAsFaults = true
         
         do {
-            let result = try context.fetch(request) as! [Question]
+            let result = try managedContext.fetch(request) as! [Question]
             for item in result {
                 item.setValue(NSNumber(value: false), forKey: "isSync")
             }
         } catch {
             print("CoreData: something went wrong with not updated")
         }
-        
-        saveContext()
     }
     
     func deleteAllNotSyncQuestion() -> Int {
         
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
+        request.returnsObjectsAsFaults = true
         request.predicate = NSPredicate(format: "isSync == %@", NSNumber(value: false))
         
         do {
-            let objects = try context.fetch(request)
+            let objects = try managedContext.fetch(request) as! [Question]
+
             for object in objects {
-                context.delete(object as! NSManagedObject)
+                managedContext.delete(object)
             }
             
             return objects.count
@@ -123,16 +129,16 @@ class CoreDataManager {
     }
     
     func getCurrentDeckWithLimit(limit: Int) -> [Question] {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+    	let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
+        request.returnsObjectsAsFaults = true
         let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: false)
         let sortDescriptors = [sectionSortDescriptor]
         request.sortDescriptors = sortDescriptors
         request.fetchLimit = limit
         
         do {
-            let result = try context.fetch(request)
+            let result = try managedContext.fetch(request)
             return (result as? [Question])!
             
         } catch {
@@ -145,18 +151,16 @@ class CoreDataManager {
     //TODO: Add additional layer for this bussiness logic
     
     func getCurrentLevel() -> Int {
-        
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
-        request.returnsObjectsAsFaults = false
+        request.returnsObjectsAsFaults = true
         let sectionSortDescriptor = NSSortDescriptor(key: "score", ascending: true)
         let sortDescriptors = [sectionSortDescriptor]
         request.sortDescriptors = sortDescriptors
         request.fetchLimit = 1
         
         do {
-            let result = try context.fetch(request)
+            let result = try managedContext.fetch(request)
             let questions = (result as? [Question])!
             
             guard questions.first != nil else {
@@ -172,13 +176,13 @@ class CoreDataManager {
     }
     
     func getQuestionsCountForLevel(level: Int) -> Int {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
+       
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
         fetchRequest.predicate = NSPredicate(format: "score == %i", level)
         
         do {
-            let questionWithLevelCount = try context.count(for: fetchRequest)
+            let questionWithLevelCount = try managedContext.count(for: fetchRequest)
             return questionWithLevelCount
         } catch {
             print("CoreData: current label did failed")
@@ -187,10 +191,11 @@ class CoreDataManager {
     }
     
     func getTotalQuestionsCount() -> Int {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
         do {
-            let totalScoreCount = try context.count(for: request)
+            let totalScoreCount = try managedContext.count(for: request)
             return totalScoreCount
         } catch {
             print("CoreData: Total Questions count did failed")
@@ -199,10 +204,11 @@ class CoreDataManager {
     }
     
     func resetDB() {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let deleteAllQuestions = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Question"))
         do {
-            try context.execute(deleteAllQuestions)
+            try managedContext.execute(deleteAllQuestions)
             saveContext()
         }
         catch {
@@ -211,10 +217,11 @@ class CoreDataManager {
     }
     
     func saveContext () {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        if context.hasChanges {
+        
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        if managedContext.hasChanges {
             do {
-                try context.save()
+                try managedContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
