@@ -88,7 +88,7 @@ class CoreDataManager {
                 return 0
             }
             
-            return Int(abs((questions.first?.score)!))
+            return Int(Double((questions.first?.score)!))
         } catch {
             print("CoreData: get current level did failed")
             return 0
