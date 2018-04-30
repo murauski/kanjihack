@@ -3,8 +3,8 @@
     <entity name="Question" representedClassName="Question" syncable="YES" codeGenerationType="class">
         <attribute name="hint1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hint2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSync" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="sync" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>

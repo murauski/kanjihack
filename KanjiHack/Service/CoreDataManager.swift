@@ -12,7 +12,7 @@ import CoreData
 class CoreDataManager {
     
     static let sharedManager = CoreDataManager()
-
+    
     private init() {} // Prevent clients from creating another instance.
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -32,18 +32,94 @@ class CoreDataManager {
     func saveNewQuestions(questions: [QuestionDTO]) {
         
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
         let userEntity = NSEntityDescription.entity(forEntityName: "Question", in: context)
         
+        var addedQuestions = 0
+        var updatedQuestions = 0
+        var deletedQuestions = 0
+        
+        //Synchronization logic
+        //1. Mark all questons as not sync
+        markAllQuestionsAsNotSynchronized()
+        
+        
         for item in questions {
-            let newQuestion = NSManagedObject(entity: userEntity!, insertInto: context)
-            newQuestion.setValue(item.hint1, forKey: "hint1")
-            newQuestion.setValue(item.hint2, forKey: "hint2")
-            newQuestion.setValue(item.value, forKey: "value")
-            newQuestion.setValue(0, forKey: "score")
+            
+            do {
+                //2. Update question or create a new one
+                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+                request.predicate = NSPredicate(format: "value == %@", item.value)
+                let fetchedResults = try context.fetch(request) as! [Question]
+                
+                let newQuestionItem = fetchedResults.first
+                
+                if let existingQuestion = newQuestionItem {
+                    // update
+                    existingQuestion.setValue(item.hint1, forKey: "hint1")
+                    existingQuestion.setValue(item.hint2, forKey: "hint2")
+                    existingQuestion.setValue(item.value, forKey: "value")
+                    existingQuestion.setValue(NSNumber(value: true), forKey: "isSync")
+                    
+                    updatedQuestions += 1
+                } else {
+                    let newQuestion = NSManagedObject(entity: userEntity!, insertInto: context)
+                    newQuestion.setValue(item.hint1, forKey: "hint1")
+                    newQuestion.setValue(item.hint2, forKey: "hint2")
+                    newQuestion.setValue(item.value, forKey: "value")
+                    newQuestion.setValue(0, forKey: "score")
+                    newQuestion.setValue(NSNumber(value: true), forKey: "isSync")
+                    
+                    addedQuestions += 1
+                }
+                
+            } catch {
+                print("CoreData: something went wrong with syncon")
+            }
         }
         
         saveContext()
+        
+        // 3. Delete all not sync items
+        deletedQuestions = deleteAllNotSyncQuestion()
+        
+        saveContext()
+    }
+    
+    func markAllQuestionsAsNotSynchronized() {
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let result = try context.fetch(request) as! [Question]
+            for item in result {
+                item.setValue(NSNumber(value: false), forKey: "isSync")
+            }
+        } catch {
+            print("CoreData: something went wrong with not updated")
+        }
+        
+        saveContext()
+    }
+    
+    func deleteAllNotSyncQuestion() -> Int {
+        
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "isSync == %@", NSNumber(value: false))
+        
+        do {
+            let objects = try context.fetch(request)
+            for object in objects {
+                context.delete(object as! NSManagedObject)
+            }
+            
+            return objects.count
+        } catch {
+            print("CoreData: Delete all previous logic")
+            return 0
+        }
     }
     
     func getCurrentDeckWithLimit(limit: Int) -> [Question] {
@@ -84,7 +160,7 @@ class CoreDataManager {
             let questions = (result as? [Question])!
             
             guard questions.first != nil else {
-
+                
                 return 0
             }
             
@@ -109,7 +185,7 @@ class CoreDataManager {
             return 0
         }
     }
-
+    
     func getTotalQuestionsCount() -> Int {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Question")
@@ -127,12 +203,13 @@ class CoreDataManager {
         let deleteAllQuestions = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Question"))
         do {
             try context.execute(deleteAllQuestions)
+            saveContext()
         }
         catch {
             print(error)
         }
     }
-
+    
     func saveContext () {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         if context.hasChanges {

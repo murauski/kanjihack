@@ -71,7 +71,9 @@ class SettingsViewController: UIViewController {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
-    	 SVProgressHUD.show(withStatus: "Updating...")
+        SVProgressHUD.show(withStatus: "Updating...")
+        
+        self.questions = [QuestionDTO]()
         
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in
@@ -115,7 +117,6 @@ class SettingsViewController: UIViewController {
                         let question = QuestionDTO(hint1: hint1, hint2: hint2, value: value)
                         
                         self.questions.append(question)
-                        //TODO: Add Score
                     }
                     
                 }
