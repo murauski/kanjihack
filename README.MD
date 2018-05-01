@@ -9,3 +9,5 @@ It's cards. Each card has a hint and a word to guess and learn. The app presents
 Of course, everyone has her own set of words to memorize, so the app does not contain any data at the start at all. Instead, you use a Google Spreadsheet to write down you own hints and words to learn, and the app downloads that data right from the spreedsheet.
 
 ***Enjoy!***
+
+![KanjiHackGif](https://github.com/murauski/kanjihack/blob/master/KanjiHackExample.gif)
