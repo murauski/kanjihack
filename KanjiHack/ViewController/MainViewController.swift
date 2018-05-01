@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import CoreData
 
-var kDeckSizeLimit = 3
+var kDeckSizeLimit = 10
 
 enum removeAnimation {
     case correct
@@ -32,7 +31,7 @@ class MainViewController: UIViewController {
     
     var panGesture = UIPanGestureRecognizer()
     var defaultCenter = CGPoint()
-    var currentQuestion = Question()
+    var currentQuestion : Question? = nil
     var currentDeck = [Question]()
 
     override func viewDidLoad() {
@@ -83,22 +82,16 @@ class MainViewController: UIViewController {
         answerView.center = CGPoint(x: answerView.center.x, y: answerView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
         
-        print("center y - \(answerView.center.y)")
-       
         handleWrongAnswerAlphaLogic()
         handleRightAnswerAlphaLogic()
         
-        let minSuccessBorderCoordinate = UIScreen.main.bounds.size.height/3
-        let maxFailedBoarderCoordinate = UIScreen.main.bounds.size.height*0.66
-//
-        
         if sender.state == UIGestureRecognizerState.ended {
-            if answerView.center.y - defaultCenter.y > 132 {
+            if answerView.center.y - defaultCenter.y > UIScreen.main.bounds.size.height*0.2 {
                 removeAnswerCardWithAnimation(animationType: removeAnimation.correct)
-                currentQuestion.score = currentQuestion.score - 1
-            } else if answerView.center.y < 100 {
+                currentQuestion!.score = currentQuestion!.score - 1
+            } else if answerView.center.y < UIScreen.main.bounds.size.height*0.2 {
                 removeAnswerCardWithAnimation(animationType: removeAnimation.wrong)
-                currentQuestion.score = currentQuestion.score + 1
+                currentQuestion!.score = currentQuestion!.score + 1
             } else {
                 UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.answerView.center = self.defaultCenter

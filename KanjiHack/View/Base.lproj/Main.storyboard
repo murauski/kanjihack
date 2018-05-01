@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -151,18 +150,21 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-js-UOi" userLabel="QuestionView">
-                                <rect key="frame" x="16" y="109" width="288" height="222"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="456"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отвечать на вопрос Отвечать на вопрос " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWZ-Re-TNd" userLabel="hint1">
-                                        <rect key="frame" x="8" y="64" width="272" height="58"/>
+                                        <rect key="frame" x="24" y="181.5" width="272" height="57.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="250" constant="58" id="jKj-9Z-tao"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hint 2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74Q-A3-foB" userLabel="hint2">
-                                        <rect key="frame" x="0.0" y="130" width="288" height="29"/>
+                                        <rect key="frame" x="16" y="247" width="288" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="29" id="fWJ-ZX-hM8"/>
+                                            <constraint firstAttribute="height" priority="250" constant="56" id="Shu-s0-jh8"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
@@ -171,15 +173,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="74Q-A3-foB" secondAttribute="trailing" id="5as-rQ-Ncj"/>
-                                    <constraint firstAttribute="height" constant="222" id="5iU-Yj-WjR"/>
-                                    <constraint firstItem="74Q-A3-foB" firstAttribute="top" secondItem="nWZ-Re-TNd" secondAttribute="bottom" constant="8" symbolic="YES" id="As3-zn-vvX"/>
-                                    <constraint firstItem="74Q-A3-foB" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leading" id="E9L-Yx-IFA"/>
-                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="centerX" secondItem="74Q-A3-foB" secondAttribute="centerX" id="EJR-0q-52T"/>
-                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leadingMargin" id="jLH-g1-EHz"/>
-                                    <constraint firstAttribute="bottom" secondItem="74Q-A3-foB" secondAttribute="bottom" constant="63" id="jOr-UM-vmH"/>
-                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="top" secondItem="iqx-js-UOi" secondAttribute="top" constant="64" id="oFG-UD-8Gc"/>
-                                    <constraint firstAttribute="width" constant="288" id="rZ0-p7-LrD"/>
+                                    <constraint firstAttribute="trailing" secondItem="nWZ-Re-TNd" secondAttribute="trailing" constant="24" id="Csp-Yo-qKR"/>
+                                    <constraint firstItem="74Q-A3-foB" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leading" constant="16" id="J5U-Ed-nVw"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="centerX" secondItem="iqx-js-UOi" secondAttribute="centerX" id="LtX-N0-Wmn"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="centerY" secondItem="iqx-js-UOi" secondAttribute="centerY" constant="-18" id="TEj-57-xtH"/>
+                                    <constraint firstItem="nWZ-Re-TNd" firstAttribute="leading" secondItem="iqx-js-UOi" secondAttribute="leading" constant="24" id="aK1-uH-qkL"/>
+                                    <constraint firstAttribute="trailing" secondItem="74Q-A3-foB" secondAttribute="trailing" constant="16" id="drT-B4-4e4"/>
+                                    <constraint firstItem="74Q-A3-foB" firstAttribute="top" secondItem="nWZ-Re-TNd" secondAttribute="bottom" constant="8" id="sW5-jM-emb"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpn-al-m3M">
@@ -194,13 +194,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="iqx-js-UOi" firstAttribute="top" secondItem="o9x-Fg-rPJ" secondAttribute="top" id="9jp-9j-xd3"/>
                             <constraint firstItem="wpn-al-m3M" firstAttribute="centerX" secondItem="stf-Z5-3Pe" secondAttribute="centerX" id="CQ1-TU-Ri5"/>
                             <constraint firstItem="kEe-zy-h8G" firstAttribute="leading" secondItem="o9x-Fg-rPJ" secondAttribute="leading" id="H8L-Au-xF5"/>
-                            <constraint firstItem="iqx-js-UOi" firstAttribute="centerY" secondItem="stf-Z5-3Pe" secondAttribute="centerY" constant="-32" id="Kef-mV-Pc6"/>
                             <constraint firstItem="kEe-zy-h8G" firstAttribute="trailing" secondItem="o9x-Fg-rPJ" secondAttribute="trailing" id="NsG-r7-Mu4"/>
+                            <constraint firstItem="iqx-js-UOi" firstAttribute="leading" secondItem="o9x-Fg-rPJ" secondAttribute="leading" id="TM6-DU-504"/>
+                            <constraint firstItem="wpn-al-m3M" firstAttribute="top" secondItem="iqx-js-UOi" secondAttribute="bottom" id="U18-wk-8k4"/>
                             <constraint firstItem="kEe-zy-h8G" firstAttribute="top" secondItem="o9x-Fg-rPJ" secondAttribute="top" id="ebm-9R-wfa"/>
+                            <constraint firstItem="o9x-Fg-rPJ" firstAttribute="trailing" secondItem="iqx-js-UOi" secondAttribute="trailing" id="gZ1-tR-HUy"/>
                             <constraint firstItem="wpn-al-m3M" firstAttribute="top" secondItem="kEe-zy-h8G" secondAttribute="bottom" constant="16" id="kJH-pf-uJU"/>
-                            <constraint firstItem="iqx-js-UOi" firstAttribute="centerX" secondItem="stf-Z5-3Pe" secondAttribute="centerX" id="yiE-b1-yrT"/>
                             <constraint firstItem="o9x-Fg-rPJ" firstAttribute="bottom" secondItem="wpn-al-m3M" secondAttribute="bottom" constant="16" id="zQE-PH-b0g"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="o9x-Fg-rPJ"/>
