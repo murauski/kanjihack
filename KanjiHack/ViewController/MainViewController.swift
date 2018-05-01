@@ -42,19 +42,23 @@ class MainViewController: UIViewController {
         addPanGestureForAnswerView()
         addTapGestureRecognizerForAnswerView()
         
-        defaultCenter = answerView.center
-        
         resetViews();
         generateDeck()
         mapLabelsWithCurrentQuestion()
     }
     
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if CoreDataManager.sharedManager.getTotalQuestionsCount() == 0 {
             navigationController?.popToRootViewController(animated: true)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        defaultCenter = answerView.center
     }
     
     func addTapGestureRecognizerForQuestionView() {
@@ -79,9 +83,14 @@ class MainViewController: UIViewController {
         answerView.center = CGPoint(x: answerView.center.x, y: answerView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
         
-        print("x - \(answerView.center.x) y - \(answerView.center.y)")
-        handleWrongAnswerLogic()
-        handleRightAnswerLogic()
+        print("center y - \(answerView.center.y)")
+       
+        handleWrongAnswerAlphaLogic()
+        handleRightAnswerAlphaLogic()
+        
+        let minSuccessBorderCoordinate = UIScreen.main.bounds.size.height/3
+        let maxFailedBoarderCoordinate = UIScreen.main.bounds.size.height*0.66
+//
         
         if sender.state == UIGestureRecognizerState.ended {
             if answerView.center.y - defaultCenter.y > 132 {
@@ -93,6 +102,8 @@ class MainViewController: UIViewController {
             } else {
                 UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.answerView.center = self.defaultCenter
+                    self.view.bringSubview(toFront: self.answerView)
+                    self.view.bringSubview(toFront: self.questionView)
                     self.wrongEmojiLabel.alpha = 0
                     self.rightEmojiLabel.alpha = 0
                 }, completion: nil)
@@ -104,7 +115,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func handleWrongAnswerLogic() {
+    func handleWrongAnswerAlphaLogic() {
         let wrongAnswerAlpha = defaultCenter.y - answerView.center.y
         switch wrongAnswerAlpha {
         case 100... :
@@ -116,7 +127,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func handleRightAnswerLogic() {
+    func handleRightAnswerAlphaLogic() {
         let rightAnswerAlpha = answerView.center.y - defaultCenter.y
         switch rightAnswerAlpha {
         case 100... :

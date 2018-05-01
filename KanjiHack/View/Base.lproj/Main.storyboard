@@ -112,7 +112,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年前" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="Jrm-rj-ViT">
                                         <rect key="frame" x="0.0" y="148" width="320" height="144"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" priority="250" constant="180" id="NoE-3Y-XAk"/>
+                                            <constraint firstAttribute="height" constant="144" id="tzn-Lp-d9J"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="120"/>
                                         <nil key="textColor"/>
@@ -141,15 +141,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="top" secondItem="FVW-PV-6Jk" secondAttribute="bottom" constant="8" id="4ou-mx-7SG"/>
-                                    <constraint firstItem="y1v-JO-ueE" firstAttribute="centerX" secondItem="kEe-zy-h8G" secondAttribute="centerX" id="TOl-rA-3n6"/>
-                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="centerX" secondItem="kEe-zy-h8G" secondAttribute="centerX" id="UtN-Ua-wty"/>
-                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="centerY" secondItem="kEe-zy-h8G" secondAttribute="centerY" id="Vur-P3-I9M"/>
-                                    <constraint firstItem="FVW-PV-6Jk" firstAttribute="centerX" secondItem="kEe-zy-h8G" secondAttribute="centerX" id="cgP-A1-on3"/>
-                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="leading" secondItem="kEe-zy-h8G" secondAttribute="leading" id="in7-6D-hvg"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="top" secondItem="FVW-PV-6Jk" secondAttribute="bottom" constant="8" symbolic="YES" id="1o1-o3-2Wo"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="centerX" secondItem="FVW-PV-6Jk" secondAttribute="centerX" id="Rxa-Yd-pHO"/>
+                                    <constraint firstItem="y1v-JO-ueE" firstAttribute="top" secondItem="Jrm-rj-ViT" secondAttribute="bottom" constant="8" symbolic="YES" id="TBe-V7-q88"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="centerY" secondItem="kEe-zy-h8G" secondAttribute="centerY" id="beS-HW-NVV"/>
+                                    <constraint firstItem="Jrm-rj-ViT" firstAttribute="leading" secondItem="kEe-zy-h8G" secondAttribute="leading" id="dkE-6q-WpN"/>
                                     <constraint firstItem="FVW-PV-6Jk" firstAttribute="leading" secondItem="y1v-JO-ueE" secondAttribute="leading" id="mZG-re-1HX"/>
-                                    <constraint firstAttribute="trailing" secondItem="Jrm-rj-ViT" secondAttribute="trailing" id="n4S-kD-37z"/>
-                                    <constraint firstItem="y1v-JO-ueE" firstAttribute="top" secondItem="Jrm-rj-ViT" secondAttribute="bottom" constant="8" id="tTL-dZ-uW2"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jrm-rj-ViT" secondAttribute="trailing" id="yA7-ko-ew6"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-js-UOi" userLabel="QuestionView">
@@ -196,12 +194,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="kEe-zy-h8G" firstAttribute="bottom" secondItem="o9x-Fg-rPJ" secondAttribute="bottom" constant="-64" id="2Sv-rJ-Vgt"/>
                             <constraint firstItem="wpn-al-m3M" firstAttribute="centerX" secondItem="stf-Z5-3Pe" secondAttribute="centerX" id="CQ1-TU-Ri5"/>
-                            <constraint firstItem="kEe-zy-h8G" firstAttribute="leading" secondItem="o9x-Fg-rPJ" secondAttribute="leading" id="HII-L6-B51"/>
+                            <constraint firstItem="kEe-zy-h8G" firstAttribute="leading" secondItem="o9x-Fg-rPJ" secondAttribute="leading" id="H8L-Au-xF5"/>
                             <constraint firstItem="iqx-js-UOi" firstAttribute="centerY" secondItem="stf-Z5-3Pe" secondAttribute="centerY" constant="-32" id="Kef-mV-Pc6"/>
-                            <constraint firstItem="kEe-zy-h8G" firstAttribute="top" secondItem="o9x-Fg-rPJ" secondAttribute="top" id="tO0-ib-gEo"/>
-                            <constraint firstItem="kEe-zy-h8G" firstAttribute="trailing" secondItem="o9x-Fg-rPJ" secondAttribute="trailing" id="tsH-Uf-0D5"/>
+                            <constraint firstItem="kEe-zy-h8G" firstAttribute="trailing" secondItem="o9x-Fg-rPJ" secondAttribute="trailing" id="NsG-r7-Mu4"/>
+                            <constraint firstItem="kEe-zy-h8G" firstAttribute="top" secondItem="o9x-Fg-rPJ" secondAttribute="top" id="ebm-9R-wfa"/>
+                            <constraint firstItem="wpn-al-m3M" firstAttribute="top" secondItem="kEe-zy-h8G" secondAttribute="bottom" constant="16" id="kJH-pf-uJU"/>
                             <constraint firstItem="iqx-js-UOi" firstAttribute="centerX" secondItem="stf-Z5-3Pe" secondAttribute="centerX" id="yiE-b1-yrT"/>
                             <constraint firstItem="o9x-Fg-rPJ" firstAttribute="bottom" secondItem="wpn-al-m3M" secondAttribute="bottom" constant="16" id="zQE-PH-b0g"/>
                         </constraints>
@@ -215,7 +213,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="answerView" destination="kEe-zy-h8G" id="c8q-Nr-BbO"/>
                         <outlet property="hint1" destination="nWZ-Re-TNd" id="0ng-WN-F8W"/>
